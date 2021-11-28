@@ -12,10 +12,7 @@ const getRestaurant = async (
   const user = (req as AuthenticatedRequest).user;
   if (!user.restaurant) return res.status(404).send('User does not have a restaurant');
   const restaurant = await Restaurant.findById((req as AuthenticatedRequest).user.restaurant).populate({
-    path: 'tables',
-    populate: {
-      path: 'reservations'
-    }
+    path: 'tables'
   });
   if (!restaurant) return res.status(404).send('User does not have a restaurant');
 
