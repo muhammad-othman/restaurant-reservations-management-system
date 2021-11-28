@@ -1,10 +1,11 @@
-import { model, Schema, Document, Model } from 'mongoose';
+import { model, Schema, Document, Model, ObjectId } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { IRestaurant } from './restaurant.model';
 
 export interface IUser extends Document {
+    _id: ObjectId;
     name: string;
     email: string;
     password: string;

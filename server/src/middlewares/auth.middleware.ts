@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import User from '../models/user.model';
-import { AuthenticatedRequest } from '../interfaces/AuthenticatedRequest';
+import { AuthenticatedRequest } from '../interfaces/authenticatedRequest';
 
 export default async (
   req: Request,
