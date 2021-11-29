@@ -4,7 +4,6 @@ import { IRestaurant } from './restaurant.model';
 
 
 export interface ITable extends Document {
-    referenceNumber: number;
     index: number;
     seats: number;
     restaurant: IRestaurant["_id"];
@@ -12,10 +11,6 @@ export interface ITable extends Document {
 }
 
 const tableSchema = new Schema({
-    referenceNumber: {
-        type: Number,
-        required: true,
-    },
     index: {
         type: Number,
         required: true,

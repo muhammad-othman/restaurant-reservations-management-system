@@ -73,7 +73,13 @@ code {
   color: $dark; // for drop down menu color
 }
 
-#nav-dropdown,
-.active-nav-link {
+#nav-dropdown{
   color: $secondary;
+}
+
+
+.active-nav-link {
+  text-decoration: none;
+  color: $dark;
+  cursor: default;
 }

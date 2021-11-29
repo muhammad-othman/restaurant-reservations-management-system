@@ -11,7 +11,7 @@ const createTable = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const { referenceNumber, seats, index } = req.body;
+  const { seats, index } = req.body;
   const user = (req as AuthenticatedRequest).user;
 
   try {
@@ -21,10 +21,7 @@ const createTable = async (
       return res.status(400).send("Duplicate table index");
 
 
-    if (restaurantTables.some(t => t.referenceNumber === referenceNumber))
-      return res.status(400).send("Duplicate table referenceNumber");
-
-    const table = new Table({ referenceNumber, seats, index, restaurant: user.restaurant });
+    const table = new Table({ seats, index, restaurant: user.restaurant });
     await table.save();
     await Restaurant.updateOne(
       { _id: user.restaurant },
