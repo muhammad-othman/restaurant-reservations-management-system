@@ -2,8 +2,8 @@ $primary: #e84f4f;
 $success: #4fe87a;
 $dark: #9c2525;
 $info: #38a4e8;
-$secondary: #2d719c;
-$warning: #e8e666;
+$warning: #ffd630;
+$secondary: #a4a4a4;
 
 @import "~bootstrap/scss/bootstrap.scss";
 
@@ -69,17 +69,18 @@ code {
 }
 
 .dropdown-menu.show a,
-#restaurant-name {
-  color: $dark; // for drop down menu color
+#restaurant-name,
+#nav-dropdown {
+  color: $dark;
 }
-
-#nav-dropdown{
-  color: $secondary;
-}
-
 
 .active-nav-link {
   text-decoration: none;
   color: $dark;
   cursor: default;
+}
+
+.col-xs-1-10 {
+  flex: 0 0 auto;
+  width: 10%;
 }
