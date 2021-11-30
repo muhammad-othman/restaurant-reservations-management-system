@@ -31,3 +31,15 @@ export const updateTable = async (table: ITable): Promise<ITable> => {
         .put(`tables/${table._id}`, table)
         .then(response => response.data)
 };
+
+export const createTable = async (index: number, seats: number): Promise<ITable> => {
+    return authAxios
+        .post(`tables/`, { index, seats })
+        .then(response => response.data)
+};
+
+export const deleteTable = async (_id: string): Promise<ITable> => {
+    return authAxios
+        .delete(`tables/${_id}`)
+        .then(response => response.data)
+};

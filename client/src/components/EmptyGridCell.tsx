@@ -6,7 +6,7 @@ import { useDrag, useDrop } from 'react-dnd'
 
 export interface IEmptyGridCellProps {
   index: number;
-  onClick?: (table: ITable) => void;
+  onClick?: () => void;
   onDrop?: (table: ITable) => void;
 }
 
@@ -26,7 +26,7 @@ const EmptyGridCell: FC<IEmptyGridCellProps> = ({ index, onClick, onDrop }) => {
   )
   return (
     <div className='col-xs-1-10 p-1 text-center' ref={drop}>
-      <Card bg='secondary' text='dark' style={{ height: '100%', minHeight: '117px', cursor: 'pointer' }}>
+      <Card onClick={onClick} bg='secondary' text='dark' style={{ height: '100%', minHeight: '117px', cursor: 'pointer' }}>
         <Card.Body className='p-2 pb-0'>
           <svg
             width="100%"
