@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { IRestaurant } from '../types';
 import { getRestaurant } from '../utils/api';
 import AuthContext from './AuthContext';
@@ -8,7 +8,7 @@ import LoadingContext from './LoadingContext';
 
 type RestaurantProviderProps = {
   userRestaurant: IRestaurant;
-  setUserRestaurant: (r: IRestaurant) => void;
+  setUserRestaurant: Dispatch<SetStateAction<IRestaurant>>;
 };
 
 const RestaurantContext = createContext<RestaurantProviderProps>(null as any);
