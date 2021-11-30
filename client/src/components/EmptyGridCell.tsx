@@ -8,13 +8,12 @@ export interface IEmptyGridCellProps {
   index: number;
   onClick?: (table: ITable) => void;
   onDrop?: (table: ITable) => void;
-  cardHeight: number;
 }
 
-const EmptyGridCell: FC<IEmptyGridCellProps> = ({ index, onClick, onDrop, cardHeight }) => {
+const EmptyGridCell: FC<IEmptyGridCellProps> = ({ index, onClick, onDrop }) => {
 
 
-  const [{ canDrop, isOver }, drop] = useDrop(
+  const [, drop] = useDrop(
     () => ({
       accept: 'table',
       drop: onDrop,
@@ -27,7 +26,7 @@ const EmptyGridCell: FC<IEmptyGridCellProps> = ({ index, onClick, onDrop, cardHe
   )
   return (
     <div className='col-xs-1-10 p-1 text-center' ref={drop}>
-      <Card bg='secondary' text='dark' style={{ height: '100%', minHeight: `${cardHeight}px`, cursor: 'pointer' }}>
+      <Card bg='secondary' text='dark' style={{ height: '100%', minHeight: '117px', cursor: 'pointer' }}>
         <Card.Body className='p-2 pb-0'>
           <svg
             width="100%"

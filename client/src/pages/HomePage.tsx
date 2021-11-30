@@ -6,16 +6,14 @@ import AuthContext from '../contexts/AuthContext';
 import LoadingContext from '../contexts/LoadingContext';
 import RestaurantContext from '../contexts/RestaurantContext';
 import { ITable } from '../types';
+import { updateTable } from '../utils/api';
 import { generateGridArray } from '../utils/functions';
 
 const HomePage = () => {
   const { logout, currentUser } = useContext(AuthContext);
   const { userRestaurant, setUserRestaurant } = useContext(RestaurantContext);
-  const { startLoading, stopLoading } = useContext(LoadingContext);
-  const [cardHeight, setCardHeight] = useState<number>(110);
 
   const handleDrop = (table: ITable, index: number) => {
-
     setUserRestaurant(restaurant => ({
       ...restaurant,
       tables: [
@@ -23,6 +21,14 @@ const HomePage = () => {
         { ...table, index }
       ]
     }));
+
+    updateTable({ ...table, index }).catch(() => setUserRestaurant(restaurant => ({
+      ...restaurant,
+      tables: [
+        ...restaurant.tables.filter(t => t._id !== table._id),
+        table
+      ]
+    })));
   }
   if (!currentUser || !userRestaurant) return null;
 
@@ -35,14 +41,11 @@ const HomePage = () => {
               key={index + 1}
               table={table}
               index={index + 1}
-              cardHeight={cardHeight}
-              setCardHeight={setCardHeight}
               onClick={() => console.log(table)}
             /> :
             <EmptyGridCell
               key={index + 1}
               index={index + 1}
-              cardHeight={cardHeight}
               onDrop={(table: ITable) => handleDrop(table, index + 1)}
             />
         ))}

@@ -1,18 +1,15 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, { FC } from 'react'
 import { Card, Col, Image, Row } from 'react-bootstrap'
 import { ITable } from '../types'
-import { useDrag, useDrop } from 'react-dnd'
+import { useDrag } from 'react-dnd'
 
 export interface IGrideCellProps {
   index: number;
   table: ITable;
-  setCardHeight: (h: number) => void;
-  cardHeight: number;
   onClick: (table: ITable) => void;
 }
 
-const GridCell: FC<IGrideCellProps> = ({ index, table, onClick, setCardHeight, cardHeight }) => {
-  const cardRef = useRef(null);
+const GridCell: FC<IGrideCellProps> = ({ index, table, onClick }) => {
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'table',
@@ -22,24 +19,18 @@ const GridCell: FC<IGrideCellProps> = ({ index, table, onClick, setCardHeight, c
     }),
   }));
 
-  useEffect(() => {
-    const height = cardRef.current.offsetHeight;
-    if (height != cardHeight)
-      setCardHeight(height);
-  })
-
   return (
     <div
       className='col-xs-1-10 p-1 text-center'
       ref={drag}
     >
-      <Card ref={cardRef}
+      <Card
         onClick={() => onClick(table)}
         bg='warning'
         text='dark'
         style={{
           height: '100%',
-          minHeight: '110px',
+          minHeight: '117px',
           cursor: 'pointer',
           opacity: isDragging ? 0.5 : 1
         }}>

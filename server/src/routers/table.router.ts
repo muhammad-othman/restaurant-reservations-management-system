@@ -44,7 +44,7 @@ const updateTable = async (
   try {
     const restaurantTables = await Table.find({ restaurant: restaurantId });
 
-    const table = restaurantTables.find(t => t._id === tableId);
+    const table = restaurantTables.find(t => t._id.toString() === tableId);
     if (!table)
       return res.status(404).send();
 

@@ -1,4 +1,4 @@
-import { ILoginFormType, IRestaurant, ISignUpFormType, IUser } from "../types";
+import { ILoginFormType, IRestaurant, ISignUpFormType, ITable, IUser } from "../types";
 import { authAxios, axios } from "./axiosConfig";
 
 
@@ -23,5 +23,11 @@ export const createRestaurant = async (name: string): Promise<IRestaurant> => {
 export const getRestaurant = async (): Promise<IRestaurant> => {
     return authAxios
         .get('restaurant')
+        .then(response => response.data)
+};
+
+export const updateTable = async (table: ITable): Promise<ITable> => {
+    return authAxios
+        .put(`tables/${table._id}`, table)
         .then(response => response.data)
 };
