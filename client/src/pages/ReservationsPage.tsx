@@ -1,9 +1,14 @@
 import React, { useContext, useEffect } from 'react'
-import { Button } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
 import { useNavigate, useHref } from 'react-router';
+import EmptyGridCell from '../components/EmptyGridCell';
+import TableGridCell from '../components/TableGridCell';
+import TableModal from '../components/TableModal';
 import AuthContext from '../contexts/AuthContext';
 import LoadingContext from '../contexts/LoadingContext';
 import RestaurantContext from '../contexts/RestaurantContext';
+import { ITable } from '../types';
+import { generateGridArray } from '../utils/functions';
 
 const ReservationsPage = () => {
   const { logout, currentUser } = useContext(AuthContext);
@@ -16,11 +21,22 @@ const ReservationsPage = () => {
 
   return (
     <div>
-      <h1>Reservations Page test</h1>
-      <h1>{currentUser.name}</h1>
-      <h1>{currentUser.email}</h1>
-      <h1>{userRestaurant.name}</h1>
-      <h1>{userRestaurant.manager}</h1>
+      <Row xs={10}>
+        {generateGridArray(userRestaurant.tables).map((table, index) => (
+          table ?
+            <TableGridCell
+              key={index + 1}
+              table={table}
+              index={index + 1}
+              onClick={() => console.log(table)}
+            /> :
+            <EmptyGridCell
+              key={index + 1}
+              index={index + 1}
+            />
+        ))}
+      </Row>
+
     </div>
   )
 };

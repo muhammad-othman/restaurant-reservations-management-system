@@ -44,9 +44,7 @@ const TableModal: FC<ITableModalProps> = ({
   }
 
   return (
-    <Modal show={isVisible} onHide={onClose}>
-
-
+    <Modal show={isVisible} onHide={onClose} centered>
       <Formik<{ seats: string }>
         initialValues={{ seats: table?.seats.toString() || '' }}
         validationSchema={validationSchema}
@@ -77,13 +75,10 @@ const TableModal: FC<ITableModalProps> = ({
                 placeholder="Enter the number of seats" />
             </Modal.Body>
 
-
             <Modal.Footer>
-
               <Button variant="secondary" onClick={onClose}>
                 Close
               </Button>
-
               {table ? (<><Button disabled={isSubmitting} onClick={async () => {
                 await onDelete(table);
                 onClose();

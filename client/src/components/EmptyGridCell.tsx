@@ -25,10 +25,10 @@ const EmptyGridCell: FC<IEmptyGridCellProps> = ({ index, onClick, onDrop }) => {
     [],
   )
   return (
-    <div className='col-xs-1-10 p-1 text-center' ref={drop}>
-      <Card onClick={onClick} bg='secondary' text='dark' style={{ height: '100%', minHeight: '117px', cursor: 'pointer' }}>
+    <div className='col-xs-1-10 p-1 text-center' ref={onDrop && drop}>
+      <Card onClick={onClick} bg='secondary' text='dark' style={{ height: '100%', minHeight: '117px', cursor: onClick ? 'pointer' : 'default' }}>
         <Card.Body className='p-2 pb-0'>
-          <svg
+          {onClick && <svg
             width="100%"
             height="100%"
             viewBox="0 0 80 35"
@@ -41,7 +41,7 @@ const EmptyGridCell: FC<IEmptyGridCellProps> = ({ index, onClick, onDrop }) => {
               fontSize="50"
               fill="#fafafa"
             >+</text>
-          </svg>
+          </svg>}
 
         </Card.Body>
       </Card>
