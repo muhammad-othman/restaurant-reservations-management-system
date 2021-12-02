@@ -1,16 +1,15 @@
 import React, { FC } from 'react'
-import { Card, Col, Image, Row } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import { ITable } from '../types'
-import { useDrag, useDrop } from 'react-dnd'
+import { useDrop } from 'react-dnd'
 
 
 export interface IEmptyGridCellProps {
-  index: number;
   onClick?: () => void;
   onDrop?: (table: ITable) => void;
 }
 
-const EmptyGridCell: FC<IEmptyGridCellProps> = ({ index, onClick, onDrop }) => {
+const EmptyGridCell: FC<IEmptyGridCellProps> = ({ onClick, onDrop }) => {
 
 
   const [, drop] = useDrop(

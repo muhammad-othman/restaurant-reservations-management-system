@@ -32,9 +32,9 @@ export const updateTable = async (table: ITable): Promise<ITable> => {
         .then(response => response.data)
 };
 
-export const createTable = async (index: number, seats: number): Promise<ITable> => {
+export const createTable = async (index: number, referenceNumber: number, seats: number): Promise<ITable> => {
     return authAxios
-        .post(`tables/`, { index, seats })
+        .post(`tables/`, { index, seats, referenceNumber })
         .then(response => response.data)
 };
 

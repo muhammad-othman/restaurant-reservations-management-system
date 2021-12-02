@@ -4,12 +4,11 @@ import { ITable } from '../types'
 import { useDrag } from 'react-dnd'
 
 export interface IGrideCellProps {
-  index: number;
   table: ITable;
   onClick: (table: ITable) => void;
 }
 
-const GridCell: FC<IGrideCellProps> = ({ index, table, onClick }) => {
+const TableGridCell: FC<IGrideCellProps> = ({ table, onClick }) => {
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'table',
@@ -50,7 +49,7 @@ const GridCell: FC<IGrideCellProps> = ({ index, table, onClick }) => {
                   fontSize="25"
                   fontWeight="bold"
                   fill="#9c2525"
-                >#{index}</text>
+                >#{table.referenceNumber}</text>
               </svg>
             </Col>
           </Row>
@@ -84,4 +83,4 @@ const GridCell: FC<IGrideCellProps> = ({ index, table, onClick }) => {
 
 }
 
-export default GridCell
+export default TableGridCell

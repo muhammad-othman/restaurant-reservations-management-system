@@ -17,6 +17,7 @@ const HomePage = () => {
 
   const [showTableModal, setShowTableModal] = useState(false);
   const [selectedTable, setSelectedTable] = useState<ITable>();
+  const [selectedReferenceNumber, setSelectedReferenceNumber] = useState<number>();
   const [selectedIndex, setSelectedIndex] = useState<number>();
 
 
@@ -66,9 +67,9 @@ const HomePage = () => {
   }
 
 
-  const handleAddTable = async (index: number, seats: number) => {
+  const handleAddTable = async (index: number, referenceNumber: number, seats: number) => {
     startLoading();
-    const addedTable = await createTable(index, seats).catch(() => startLoading());
+    const addedTable = await createTable(index, referenceNumber, seats).catch(() => startLoading());
     if (addedTable)
       setUserRestaurant(restaurant => ({
         ...restaurant,
@@ -80,6 +81,18 @@ const HomePage = () => {
     stopLoading();
   }
 
+  const generateNewReferenceNumber = (tables: ITable[]): number => {
+    const tableNumbers = tables.map(t => t.referenceNumber).sort((a, b) => a - b);
+    let referenceNumber = 1;
+    for (let i = 0; i < tableNumbers.length; i++) {
+      if (tableNumbers[i] !== referenceNumber)
+        return referenceNumber;
+      else
+        referenceNumber++;
+    }
+    return referenceNumber;
+  }
+
   if (!currentUser || !userRestaurant) return null;
 
   return (
@@ -88,22 +101,22 @@ const HomePage = () => {
         {generateGridArray(userRestaurant.tables).map((table, index) => (
           table ?
             <TableGridCell
-              key={index + 1}
+              key={table._id}
               table={table}
-              index={index + 1}
               onClick={() => {
                 setSelectedTable(table);
-                setSelectedIndex(index + 1);
+                setSelectedIndex(index);
+                setSelectedReferenceNumber(table.referenceNumber);
                 setShowTableModal(true);
               }}
             /> :
             <EmptyGridCell
-              key={index + 1}
-              index={index + 1}
-              onDrop={(table: ITable) => handleDrop(table, index + 1)}
+              key={index}
+              onDrop={(table: ITable) => handleDrop(table, index)}
               onClick={() => {
                 setSelectedTable(table);
-                setSelectedIndex(index + 1);
+                setSelectedIndex(index);
+                setSelectedReferenceNumber(generateNewReferenceNumber(userRestaurant.tables));
                 setShowTableModal(true);
               }}
             />
@@ -113,11 +126,11 @@ const HomePage = () => {
       <TableModal
         onDelete={handleDeleteTable}
         onEditTable={handleEditTable}
-        onAddTable={handleAddTable}
+        onAddTable={(r, s) => handleAddTable(selectedIndex, r, s)}
         onClose={() => setShowTableModal(false)}
         isVisible={showTableModal}
         table={selectedTable}
-        index={selectedIndex}
+        referenceNumber={selectedReferenceNumber}
       />
     </div>
   )

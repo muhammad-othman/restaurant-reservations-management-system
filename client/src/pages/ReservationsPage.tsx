@@ -27,12 +27,10 @@ const ReservationsPage = () => {
             <TableGridCell
               key={index + 1}
               table={table}
-              index={index + 1}
               onClick={() => console.log(table)}
             /> :
             <EmptyGridCell
               key={index + 1}
-              index={index + 1}
             />
         ))}
       </Row>

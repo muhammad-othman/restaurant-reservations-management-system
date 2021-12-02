@@ -7,10 +7,10 @@ import FormikCustomTextField from './FormikCustomTextField';
 
 
 export interface ITableModalProps {
-  index: number;
+  referenceNumber: number;
   table: ITable;
   onEditTable: (table: ITable) => Promise<void>;
-  onAddTable: (index: number, seats: number) => Promise<void>;
+  onAddTable: (referenceNumber: number, seats: number) => Promise<void>;
   onDelete: (table: ITable) => void;
   onClose: () => void;
   isVisible: boolean;
@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
 
 
 const TableModal: FC<ITableModalProps> = ({
-  index,
+  referenceNumber,
   table,
   onEditTable,
   onDelete,
@@ -38,7 +38,7 @@ const TableModal: FC<ITableModalProps> = ({
       await onEditTable({ ...table, seats });
     }
     else {
-      await onAddTable(index, seats);
+      await onAddTable(referenceNumber, seats);
     }
     onClose();
   }
@@ -63,7 +63,7 @@ const TableModal: FC<ITableModalProps> = ({
           isSubmitting }) => (
           <Form onSubmit={handleSubmit}>
             <Modal.Header closeButton>
-              <Modal.Title>#{index}</Modal.Title>
+              <Modal.Title>#{referenceNumber}</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>

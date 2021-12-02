@@ -10,6 +10,7 @@ export interface IReservation {
 export interface ITable {
   _id: string;
   index: number;
+  referenceNumber: number;
   seats: number;
   restaurant: IRestaurant;
   reservations: Array<IReservation>;
