@@ -51,6 +51,12 @@ export const getTableReservations = async (_id: string): Promise<IReservation[]>
         .then(response => response.data)
 };
 
+export const getDateReservations = async (startDate: string, endDate: string): Promise<IReservation[]> => {
+    return authAxios
+        .get(`tables/reservations?startdate=${startDate}&enddate=${endDate}`)
+        .then(response => response.data)
+};
+
 export const updateReservation = async (tableId: string, reservation: IReservation): Promise<IReservation> => {
     return authAxios
         .put(`tables/${tableId}/reservations/${reservation._id}`, reservation)
