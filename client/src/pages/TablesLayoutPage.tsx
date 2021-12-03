@@ -10,7 +10,7 @@ import { ITable } from '../types';
 import { createTable, deleteTable, updateTable } from '../utils/api';
 import { generateGridArray } from '../utils/functions';
 
-const HomePage = () => {
+const TablesLayoutPage = () => {
   const { currentUser } = useContext(AuthContext);
   const { userRestaurant, setUserRestaurant } = useContext(RestaurantContext);
   const { stopLoading, startLoading } = useContext(LoadingContext);
@@ -137,4 +137,4 @@ const HomePage = () => {
   )
 };
 
-export default HomePage;
+export default TablesLayoutPage;

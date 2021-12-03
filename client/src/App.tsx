@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import TablesLayoutPage from './pages/TablesLayoutPage';
 import LoginPage from './pages/auth-pages/LoginPage';
 import AuthContext from './contexts/AuthContext';
 import LoadingContext from './contexts/LoadingContext';
@@ -34,7 +34,7 @@ const App = () => {
               <Route path="/table/:tableId" element={<TablePage />} />
               <Route path="/reservations" element={<ReservationsPage />} />
               <Route path="/reports" element={<ReportsPage />} />
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<TablesLayoutPage />} />
               <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>
           </Container>

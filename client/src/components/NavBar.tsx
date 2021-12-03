@@ -22,12 +22,12 @@ const NavBar = () => {
         </Navbar.Brand>
         <Navbar.Brand id="restaurant-name">{userRestaurant ? userRestaurant.name : 'Restaurant Reservations Management System'}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse id="basic-navbar-nav" style={{ whiteSpace: 'nowrap' }}>
           <NavLink to="/" className={({ isActive }) => (isActive ? 'mx-2 active-nav-link' : 'mx-2')}>
-            Tables
+            Tables Layout
           </NavLink>
           <NavLink to="/reservations" className={({ isActive }) => (isActive ? 'mx-2 active-nav-link' : 'mx-2')}>
-            Reservations
+            Reservations Management
           </NavLink>
           <NavLink to="/reports" className={({ isActive }) => (isActive ? 'mx-2 active-nav-link' : 'mx-2')}>
             Reports
