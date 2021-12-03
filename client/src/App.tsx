@@ -10,7 +10,7 @@ import NavBar from './components/NavBar';
 import { Container } from 'react-bootstrap';
 import ReportsPage from './pages/ReportsPage';
 import ReservationsPage from './pages/ReservationsPage';
-import TablePage from './pages/TablePage';
+import ReservationsManagementPage from './pages/ReservationsManagementPage';
 
 const App = () => {
 
@@ -31,7 +31,7 @@ const App = () => {
           <NavBar />
           <Container>
             <Routes>
-              <Route path="/table/:tableId" element={<TablePage />} />
+              <Route path="/table/:tableId" element={<ReservationsManagementPage />} />
               <Route path="/reservations" element={<ReservationsPage />} />
               <Route path="/reports" element={<ReportsPage />} />
               <Route path="/" element={<TablesLayoutPage />} />
