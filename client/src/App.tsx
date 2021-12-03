@@ -10,18 +10,20 @@ import NavBar from './components/NavBar';
 import { Container } from 'react-bootstrap';
 import ReportsPage from './pages/ReportsPage';
 import ReservationsPage from './pages/ReservationsPage';
+import TablePage from './pages/TablePage';
 
 const App = () => {
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, authApplied } = useContext(AuthContext);
   const { pathname } = useLocation();
   const { stopLoading } = useContext(LoadingContext);
 
 
   useEffect(() => {
     stopLoading();
-  }, [pathname]);
+  }, [pathname, stopLoading]);
 
+  if (!authApplied) return null;
   return (
     <>
       {currentUser && currentUser.restaurant ?
@@ -29,6 +31,7 @@ const App = () => {
           <NavBar />
           <Container>
             <Routes>
+              <Route path="/table/:tableId" element={<TablePage />} />
               <Route path="/reservations" element={<ReservationsPage />} />
               <Route path="/reports" element={<ReportsPage />} />
               <Route path="/" element={<HomePage />} />

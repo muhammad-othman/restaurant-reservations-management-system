@@ -5,10 +5,11 @@ import { useDrag } from 'react-dnd'
 
 export interface IGrideCellProps {
   table: ITable;
-  onClick: (table: ITable) => void;
+  onClick?: (table: ITable) => void;
+  draggable?: boolean;
 }
 
-const TableGridCell: FC<IGrideCellProps> = ({ table, onClick }) => {
+const TableGridCell: FC<IGrideCellProps> = ({ table, onClick, draggable }) => {
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'table',
@@ -21,10 +22,10 @@ const TableGridCell: FC<IGrideCellProps> = ({ table, onClick }) => {
   return (
     <div
       className='col-xs-1-10 p-1 text-center'
-      ref={drag}
+      ref={draggable && drag}
     >
       <Card
-        onClick={() => onClick(table)}
+        onClick={() => onClick && onClick(table)}
         bg='warning'
         text='dark'
         style={{

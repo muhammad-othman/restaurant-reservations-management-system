@@ -20,6 +20,7 @@ const validationSchema = Yup.object().shape({
   seats: Yup.number()
     .required("* Number of seats is required")
     .min(1, "* Number of seats must be greater than 0")
+    .max(100, "* Number of seats must be less than 100")
 });
 
 

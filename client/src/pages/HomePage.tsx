@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, Row } from 'react-bootstrap';
+import React, { useContext, useState } from 'react'
+import { Row } from 'react-bootstrap';
 import EmptyGridCell from '../components/EmptyGridCell';
 import TableGridCell from '../components/TableGridCell';
 import TableModal from '../components/TableModal';
@@ -96,13 +96,14 @@ const HomePage = () => {
   if (!currentUser || !userRestaurant) return null;
 
   return (
-    <div>
+    <>
       <Row xs={10}>
         {generateGridArray(userRestaurant.tables).map((table, index) => (
           table ?
             <TableGridCell
               key={table._id}
               table={table}
+              draggable
               onClick={() => {
                 setSelectedTable(table);
                 setSelectedIndex(index);
@@ -132,7 +133,7 @@ const HomePage = () => {
         table={selectedTable}
         referenceNumber={selectedReferenceNumber}
       />
-    </div>
+    </>
   )
 };
 

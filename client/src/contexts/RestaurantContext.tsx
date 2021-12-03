@@ -36,7 +36,7 @@ export const RestaurantProvider: React.FC = ({ children }) => {
       stopLoading();
     });
 
-  }, [currentUser]);
+  }, [currentUser, userRestaurant, startLoading, stopLoading]);
 
 
 

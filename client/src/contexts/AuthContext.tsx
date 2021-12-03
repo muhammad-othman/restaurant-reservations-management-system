@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { IUser } from '../types';
 import { clearAuthToken, setAuthToken } from '../utils/axiosConfig';
 
@@ -9,23 +9,27 @@ type AuthProviderProps = {
   setUserData: (data: { token: string, user: IUser }) => void;
   updateUserData: (user: IUser) => void;
   logout: () => void;
+  authApplied: boolean;
 };
 
 const AuthContext = createContext<AuthProviderProps>(null as any);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<IUser>();
+  const [authApplied, setAuthApplied] = useState<boolean>();
 
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData')) as IUser;
     const jwt = JSON.parse(localStorage.getItem('token'));
-    if (!userData)
+    if (!userData) {
+      setAuthApplied(true);
       return null;
+    }
 
     setAuthToken(jwt);
     setCurrentUser(userData);
-
+    setAuthApplied(true);
   }, []);
 
   const logout = () => {
@@ -56,6 +60,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         setUserData,
         logout,
         updateUserData,
+        authApplied,
       }}>
       {children}
     </AuthContext.Provider>

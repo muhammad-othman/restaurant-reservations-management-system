@@ -16,6 +16,7 @@ const NavBar = () => {
               src="/logo.svg"
               width="50"
               height="50"
+              alt="logo"
             />
           </Link>
         </Navbar.Brand>
