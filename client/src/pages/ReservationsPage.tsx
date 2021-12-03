@@ -21,7 +21,7 @@ const ReservationsPage = () => {
             <TableGridCell
               key={index + 1}
               table={table}
-              onClick={() => navigate(`/table/${table._id}`)}
+              onClick={() => navigate(`/reservations/${table._id}`)}
             /> :
             <EmptyGridCell
               key={index + 1}

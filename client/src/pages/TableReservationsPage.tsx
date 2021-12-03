@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import { getDateString } from '../utils/functions';
 
 
-const ReservationsManagementPage = () => {
+const TableReservationsPage = () => {
   const { currentUser } = useContext(AuthContext);
   const { userRestaurant } = useContext(RestaurantContext);
   const [showReservationModal, setShowReservationModal] = useState(false);
@@ -184,4 +184,4 @@ const ReservationsManagementPage = () => {
   );
 }
 
-export default ReservationsManagementPage;
+export default TableReservationsPage;
