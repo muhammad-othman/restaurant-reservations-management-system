@@ -55,12 +55,7 @@ const TableModal: FC<ITableModalProps> = ({
           setSubmitting(false);
         }}
       >
-        {({ values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
+        {({ handleSubmit,
           isSubmitting }) => (
           <Form onSubmit={handleSubmit}>
             <Modal.Header closeButton>

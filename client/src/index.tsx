@@ -8,6 +8,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { LoadingProvider } from './contexts/LoadingContext';
 import { BrowserRouter } from 'react-router-dom';
 import { RestaurantProvider } from './contexts/RestaurantContext';
+import { ToastContainer } from 'react-toastify';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.render(
         <RestaurantProvider>
           <DndProvider backend={HTML5Backend}>
             <BrowserRouter>
+              <ToastContainer />
               <App />
             </BrowserRouter>
           </DndProvider>

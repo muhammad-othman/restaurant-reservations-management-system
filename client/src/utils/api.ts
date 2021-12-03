@@ -1,4 +1,4 @@
-import { ILoginFormType, IRestaurant, ISignUpFormType, ITable, IUser } from "../types";
+import { ILoginFormType, IReservation, IRestaurant, ISignUpFormType, ITable, IUser } from "../types";
 import { authAxios, axios } from "./axiosConfig";
 
 
@@ -41,5 +41,30 @@ export const createTable = async (index: number, referenceNumber: number, seats:
 export const deleteTable = async (_id: string): Promise<ITable> => {
     return authAxios
         .delete(`tables/${_id}`)
+        .then(response => response.data)
+};
+
+
+export const getTableReservations = async (_id: string): Promise<IReservation[]> => {
+    return authAxios
+        .get(`tables/reservations?table=${_id}`)
+        .then(response => response.data)
+};
+
+export const updateReservation = async (tableId: string, reservation: IReservation): Promise<IReservation> => {
+    return authAxios
+        .put(`tables/${tableId}/reservations/${reservation._id}`, reservation)
+        .then(response => response.data)
+};
+
+export const createReservation = async (tableId: string, reservation: IReservation): Promise<IReservation> => {
+    return authAxios
+        .post(`tables/${tableId}/reservations`, reservation)
+        .then(response => response.data)
+};
+
+export const deleteReservation = async (tableId: string, _id: string): Promise<IReservation> => {
+    return authAxios
+        .delete(`tables/${tableId}/reservations/${_id}`)
         .then(response => response.data)
 };

@@ -1,6 +1,6 @@
 export interface IReservation {
   _id: string;
-  date: Date;
+  date?: Date;
   customerName: string;
   customerEmail: string;
   customerPhoneNumber: string;

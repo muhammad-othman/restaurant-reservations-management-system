@@ -1,30 +1,29 @@
-import { Field, Form, Formik } from 'formik';
-import React, { FC, useContext, useEffect, useState } from 'react'
-import { Button, Card, Col, Image, Modal, Row } from 'react-bootstrap'
-import * as Yup from 'yup';
-import { ITable } from '../types'
-import FormikCustomTextField from '../components/FormikCustomTextField';
+import React, { useContext, useEffect, useState } from 'react'
+import { Button, Card, Col, Image, Row, Tab, Table, Tabs } from 'react-bootstrap'
+import { IReservation, ITable } from '../types'
 import { useNavigate, useParams } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext';
 import RestaurantContext from '../contexts/RestaurantContext';
-
-
-const validationSchema = Yup.object().shape({
-  seats: Yup.number()
-    .required("* Number of seats is required")
-    .min(1, "* Number of seats must be greater than 0")
-    .max(100, "* Number of seats must be less than 100")
-});
+import ReservationModal from '../components/ReservationModal';
+import LoadingContext from '../contexts/LoadingContext';
+import { createReservation, deleteReservation, getTableReservations, updateReservation } from '../utils/api';
+import { toast } from 'react-toastify';
+import { getDateString } from '../utils/functions';
 
 
 const TableReservationsModal = () => {
   const { currentUser } = useContext(AuthContext);
   const { userRestaurant } = useContext(RestaurantContext);
-  const [table, setTable] = useState<ITable>()
+  const [showReservationModal, setShowReservationModal] = useState(false);
+  const [tableReservations, setTableReservations] = useState<IReservation[]>([]);
+  const [selectedReservation, setSelectedReservation] = useState<IReservation>();
+  const { stopLoading, startLoading } = useContext(LoadingContext);
+  const [table, setTable] = useState<ITable>();
   const params = useParams();
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (!currentUser || !userRestaurant) return;
+    if (!userRestaurant) return;
     if (!params.tableId)
       navigate('/');
 
@@ -33,8 +32,68 @@ const TableReservationsModal = () => {
       navigate('/');
 
     setTable(currentTable);
+    getReservations(currentTable._id);
+  }, [params.tableId, userRestaurant, navigate]);
 
-  }, [params.tableId, userRestaurant]);
+  const getReservations = async (id: string) => {
+    startLoading();
+    const reservations = (await getTableReservations(id))
+      .map(r => ({ ...r, date: new Date(r.date) }))
+      .sort((a, b) => a.date.getTime() - b.date.getTime());
+    setTableReservations(reservations);
+    stopLoading();
+  }
+
+  const handleAddReservation = async (reservation: IReservation) => {
+    startLoading();
+    let addedReservation = await createReservation(table._id, reservation).catch((error) => {
+      if (error?.response?.data)
+        toast.error(error.response.data);
+    });
+    if (addedReservation) {
+      addedReservation = { ...addedReservation, date: new Date(addedReservation.date) };
+      setTableReservations([...tableReservations, addedReservation]
+        .sort((a, b) => a.date.getTime() - b.date.getTime()));
+
+      setShowReservationModal(false);
+    }
+    stopLoading();
+  }
+
+  const editReservation = async (reservation: IReservation) => {
+    setSelectedReservation(reservation);
+    setShowReservationModal(true);
+  }
+
+  const handleEditReservation = async (reservation: IReservation) => {
+    startLoading();
+    let editedReservation = await updateReservation(table._id, reservation).catch((error) => {
+      if (error?.response?.data)
+        toast.error(error.response.data);
+    });
+    if (editedReservation) {
+      editedReservation = { ...editedReservation, date: new Date(editedReservation.date) };
+
+      setTableReservations([...tableReservations.filter(r => r._id !== reservation._id), editedReservation]
+        .sort((a, b) => a.date.getTime() - b.date.getTime()));
+
+      setShowReservationModal(false);
+      setSelectedReservation(null);
+    }
+    stopLoading();
+  }
+
+  const removeReservation = async (reservation: IReservation) => {
+    startLoading();
+    const deletedReservation = await deleteReservation(table._id, reservation._id).catch((error) => {
+      if (error?.response?.data)
+        toast.error(error.response.data);
+    });
+    if (deletedReservation)
+      setTableReservations([...tableReservations.filter(r => r._id !== reservation._id)]);
+    stopLoading();
+  }
+
 
   if (!currentUser || !userRestaurant || !table) return null;
 
@@ -53,15 +112,76 @@ const TableReservationsModal = () => {
           </Col>
         </Row>
       </Card>
-      <h1>{table.referenceNumber}</h1>
-      <h1>{table.index}</h1>
-      <h1>{table.seats}</h1>
+
+      <Button className="my-3" onClick={() => setShowReservationModal(true)} type="submit" variant="success">
+        Add New Reservation
+      </Button>
+
+      <Tabs defaultActiveKey="future" >
+        <Tab eventKey="future" title="Future Reservations">
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer Name</th>
+                <th>Customer Email</th>
+                <th>Customer Phone Number</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableReservations.filter(e => e.date.getTime() >= new Date().getTime()).map(reservation => (
+                <tr key={reservation._id}>
+                  <td>{getDateString(reservation.date)}</td>
+                  <td>{reservation.customerName}</td>
+                  <td>{reservation.customerEmail}</td>
+                  <td>{reservation.customerPhoneNumber}</td>
+                  <td>
+                    <Button variant="warning" className="me-2" onClick={() => editReservation(reservation)}>Edit</Button>
+                    <Button variant="dark" onClick={() => removeReservation(reservation)}>Delete</Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Tab>
+        <Tab eventKey="past" title="Past Reservations">
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer Name</th>
+                <th>Customer Email</th>
+                <th>Customer Phone Number</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableReservations.filter(e => e.date.getTime() < new Date().getTime()).map(reservation => (
+                <tr key={reservation._id}>
+                  <td>{getDateString(reservation.date)}</td>
+                  <td>{reservation.customerName}</td>
+                  <td>{reservation.customerEmail}</td>
+                  <td>{reservation.customerPhoneNumber}</td>
+                  <td>
+                    <Button variant="warning" className="me-2" onClick={() => editReservation(reservation)}>Edit</Button>
+                    <Button variant="dark" onClick={() => removeReservation(reservation)}>Delete</Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Tab>
+      </Tabs>
+
+      <ReservationModal
+        onEditReservation={handleEditReservation}
+        onAddReservation={handleAddReservation}
+        onClose={() => setShowReservationModal(false)}
+        isVisible={showReservationModal}
+        tableId={table._id}
+        reservation={selectedReservation}
+      />
     </>
   );
 }
 
-export default TableReservationsModal
-function useNavigation() {
-  throw new Error('Function not implemented.');
-}
-
+export default TableReservationsModal;

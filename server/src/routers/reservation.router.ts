@@ -18,12 +18,11 @@ const createReservation = async (
 
 
   const parsedDate = new Date(date);
-  if (parsedDate <= new Date()
-    || parsedDate.getMilliseconds() > 0
+
+  if (parsedDate.getMilliseconds() > 0
     || parsedDate.getSeconds() > 0
-    || parsedDate.getMinutes() > 0
-  )
-    return res.status(400).send();
+    || parsedDate.getMinutes() > 0)
+    return res.status(400).send('Reservation date can only be at the begining of an hour');
 
   const user = (req as AuthenticatedRequest).user;
 
@@ -59,12 +58,11 @@ const updateReservation = async (
 
 
   const parsedDate = new Date(date);
-  if (parsedDate <= new Date()
-    || parsedDate.getMilliseconds() > 0
+
+  if (parsedDate.getMilliseconds() > 0
     || parsedDate.getSeconds() > 0
-    || parsedDate.getMinutes() > 0
-  )
-    return res.status(400).send();
+    || parsedDate.getMinutes() > 0)
+    return res.status(400).send('Reservation date can only be at the begining of an hour');
 
   const user = (req as AuthenticatedRequest).user;
 
@@ -74,7 +72,7 @@ const updateReservation = async (
     if (!table || table.restaurant.toString() !== user.restaurant.toString())
       return res.status(404).send();
 
-    const reservation = table.reservations.find(r => r._id === reservationId);
+    const reservation = table.reservations.find(r => r._id.toString() === reservationId);
     if (!reservation)
       return res.status(404).send();
 

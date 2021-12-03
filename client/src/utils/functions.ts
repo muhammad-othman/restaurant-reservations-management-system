@@ -7,3 +7,8 @@ export const generateGridArray = (tables: Array<ITable>, size: number = 150): Ar
   }
   return array;
 };
+
+export const getDateString = (date: Date) => {
+  const dateString = date.toLocaleString();
+  return `${dateString.split(':')[0]} ${dateString.slice(dateString.length - 2)}`;
+}

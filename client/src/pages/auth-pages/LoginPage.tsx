@@ -63,12 +63,7 @@ const LoginPage = () => {
                   setSubmitting(false);
                 }}
               >
-                {({ values,
-                  errors,
-                  touched,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
+                {({ handleSubmit,
                   isSubmitting }) => (
                   <Form onSubmit={handleSubmit}>
 
