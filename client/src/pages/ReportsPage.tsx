@@ -19,12 +19,10 @@ const ReportsPage = () => {
   const [tablesReservations, setTablesReservations] = useState<{ referenceNumber: number, reservations: IReservation[] }[]>([]);
 
   useEffect(() => {
-    console.log(startDate, endDate);
     if (!startDate || !endDate || !userRestaurant) return;
-
     getReservations(startDate, endDate);
-
   }, [startDate, endDate]);
+
 
   const getReservations = async (start: Date, end: Date) => {
     startLoading();
@@ -32,7 +30,6 @@ const ReportsPage = () => {
     const reservations = (await getDateReservations(start.toISOString(), end.toISOString()))
       .map(r => ({ ...r, date: new Date(r.date) }))
       .sort((a, b) => a.date.getTime() - b.date.getTime());
-
 
     const tablesReservationsArray: { referenceNumber: number, reservations: IReservation[] }[] = [];
 
@@ -49,11 +46,8 @@ const ReportsPage = () => {
     });
 
     setTablesReservations(tablesReservationsArray);
-
     stopLoading();
-
   }
-
 
 
   if (!currentUser || !userRestaurant) return null;

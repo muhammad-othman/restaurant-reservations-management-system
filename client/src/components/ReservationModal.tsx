@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
   customerName: Yup.string().required('Customer name is required'),
   customerEmail: Yup.string().email('Invalid email').required('Customer email is required'),
   customerPhoneNumber: Yup.string().required('Customer phone number is required'),
-  date: Yup.date().required('Reservation date is required'),
+  date: Yup.date().nullable().required('Reservation date is required'),
 });
 
 

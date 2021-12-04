@@ -23,15 +23,20 @@ const NavBar = () => {
         <Navbar.Brand id="restaurant-name">{userRestaurant ? userRestaurant.name : 'Restaurant Reservations Management System'}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" style={{ whiteSpace: 'nowrap' }}>
-          <NavLink to="/" className={({ isActive }) => (isActive ? 'mx-2 active-nav-link' : 'mx-2')}>
-            Tables Layout
-          </NavLink>
-          <NavLink to="/reservations" className={({ isActive }) => (isActive ? 'mx-2 active-nav-link' : 'mx-2')}>
-            Reservations Management
-          </NavLink>
-          <NavLink to="/reports" className={({ isActive }) => (isActive ? 'mx-2 active-nav-link' : 'mx-2')}>
-            Reports
-          </NavLink>
+
+          {userRestaurant &&
+            <>
+              <NavLink to="/" className={({ isActive }) => (isActive ? 'mx-2 active-nav-link' : 'mx-2')}>
+                Tables Layout
+              </NavLink>
+              <NavLink to="/reservations" className={({ isActive }) => (isActive ? 'mx-2 active-nav-link' : 'mx-2')}>
+                Reservations Management
+              </NavLink>
+              <NavLink to="/reports" className={({ isActive }) => (isActive ? 'mx-2 active-nav-link' : 'mx-2')}>
+                Reports
+              </NavLink>
+            </>
+          }
           <Nav className="justify-content-end" style={{ width: "100%" }} >
             <NavDropdown title={currentUser.name} id="nav-dropdown">
               <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
