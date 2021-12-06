@@ -61,7 +61,6 @@ const SignUpPage = () => {
             <Card.Body >
               <Form.Text className="text-danger">{errorMessage}</Form.Text>
               <br />
-              <br />
               <Formik<ISignUpFormType>
                 initialValues={{ name: "", email: "", password: "", confirmPassword: "" }}
                 validationSchema={validationSchema}

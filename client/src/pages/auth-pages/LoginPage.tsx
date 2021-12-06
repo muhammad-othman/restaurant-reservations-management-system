@@ -53,7 +53,6 @@ const LoginPage = () => {
             <Card.Body >
               <Form.Text className="text-danger">{errorMessage}</Form.Text>
               <br />
-              <br />
               <Formik<ILoginFormType>
                 initialValues={{ email: "", password: "" }}
                 validationSchema={validationSchema}
