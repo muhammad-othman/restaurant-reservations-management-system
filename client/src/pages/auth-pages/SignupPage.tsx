@@ -54,7 +54,7 @@ const SignUpPage = () => {
 
         <Col xs="10" md="8" lg="6">
           <Row xs="10" className="justify-content-center m-4">
-            <Image src="./logo.svg" style={{ maxHeight: '250px' }} />
+            <Image src="./logo.svg" style={{ maxHeight: '200px' }} />
           </Row>
           <Card bg={'light'} >
             <Card.Header as="h5">SignUp</Card.Header>

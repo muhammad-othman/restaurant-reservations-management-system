@@ -38,7 +38,7 @@ const CreateRestaurantPage = () => {
     <Container >
       <Row className="justify-content-center auth-form-container ">
         <Row className="justify-content-center m-4">
-          <Image src="./logo.svg" style={{ maxHeight: '250px' }} />
+          <Image src="./logo.svg" style={{ maxHeight: '200px' }} />
         </Row>
         <Col xs="10" md="8" lg="6">
           <Card bg={'light'} >
